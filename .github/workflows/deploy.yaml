@@ -15,7 +15,7 @@ jobs:
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Build da imagem
-        run: docker build -t ${{secrets.REGISTRY_SERVER}}/api-pedidos-rafael/pedidos_api:${{github.sha}} .
+        run: docker build -t ${{secrets.REGISTRY_SERVER}}/api-pedidos-rafael/pedidos_api:latest .
 
       - name: Push para o Registry
         run: docker push ${{ secrets.REGISTRY_SERVER }}/api-pedidos/pedidos-api:${{ github.sha }}
@@ -28,5 +28,5 @@ jobs:
       - name: Deploy no K3s
         run: |
           kubectl set image deployment/pedidos-api \
-            pedidos-api=${{ secrets.REGISTRY_SERVER }}/api-pedidos/pedidos-api:${{ github.sha }}
+            pedidos-api=${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }}
           kubectl rollout status deployment/pedidos-api  
