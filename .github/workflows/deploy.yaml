@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Login no Registry do Magalu Cloud
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Build da imagem
-        run: docker build -t ${{secrets.REGISTRY_SERVER}}/api-pedidos-rafael/pedidos_api:latest .
+        run: docker build -t ${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }} .
 
       - name: Push para o Registry
-        run: docker push ${{ secrets.REGISTRY_SERVER }}/api-pedidos/pedidos-api:${{ github.sha }}
+        run: docker push ${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }}
 
       - name: Configurar o kubectl
         run: |
