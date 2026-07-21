@@ -15,7 +15,7 @@ jobs:
         run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_SERVER }} -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Build da imagem
-        run: docker build -t ${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }} .
+        run: docker build -t ${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }} ~/Desktop/application_20-08/move-tech-cloud-application-comp-3/
 
       - name: Push para o Registry
         run: docker push ${{ secrets.REGISTRY_SERVER }}/api-pedidos-rafael/pedidos_api:${{ github.sha }}
